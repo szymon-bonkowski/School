@@ -1,4 +1,4 @@
-from library import wyswietl_biblioteke, dodaj_ksiazke, usun_ksiazke, edytuj_ksiazke
+from projects.library import wyswietl_biblioteke, dodaj_ksiazke, usun_ksiazke, edytuj_ksiazke
 from storage import zapisz_biblioteke, wczytaj_biblioteke
 
 PLIK_BIBLIOTEKA = "biblioteka.json"
