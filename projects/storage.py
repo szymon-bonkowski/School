@@ -2,18 +2,11 @@ import json
 from models import Ksiazka
 
 def zapisz_biblioteke(plik, biblioteka):
-    """
-    Zapisuje listę książek (obiektów Ksiazka) do pliku JSON.
-    """
     lista_dict = [ksiazka.to_dict() for ksiazka in biblioteka]
     with open(plik, 'w', encoding='utf-8') as f:
         json.dump(lista_dict, f, ensure_ascii=False, indent=4)
 
 def wczytaj_biblioteke(plik):
-    """
-    Odczytuje listę książek z pliku JSON.
-    Jeśli plik nie istnieje, zwraca pustą listę.
-    """
     biblioteka = []
     try:
         with open(plik, 'r', encoding='utf-8') as f:
