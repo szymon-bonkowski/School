@@ -1,219 +1,255 @@
-class PassengerService:
-    def __init__(self, passenger_capacity):
-        self.passenger_capacity = passenger_capacity
+class SamolotPasazerskiCzesc:
+    def __init__(self, pax_cap):
+        self.pax_cap = pax_cap
+    def lataj_akcja(self, ident):
+        return f"{ident} startuje, {self.pax_cap} ludzików na pokładzie"
+    def laduj_akcja(self, ident):
+        return f"{ident} lądowanie ok"
+    def stan_info(self, ident, czy_leci):
+        status_lotu = "w powietrzu" if czy_leci else "na glebie"
+        return f"typ pasazerski {ident}, {status_lotu}"
+    def przyjmij_pasazerow_akcja(self, ident):
+        return f"{ident} wpuszczanie na pokład"
+    def czysc_kabine_akcja(self, ident):
+        return f"{ident} sprzątanie"
+    def ogloszenie_akcja(self, ident):
+        return f"{ident} witamy na pokładzie, lecimy"
 
-    def fly(self, identifier):
-        return f"{identifier} startuje z max pasażerami: {self.passenger_capacity}"
+class SamolotTowarowyCzesc:
+    def __init__(self, waga_ladunku):
+        self.waga_ladunku = waga_ladunku
+    def lataj_akcja(self, ident):
+        return f"{ident} leci z ładunkiem {self.waga_ladunku}kg"
+    def laduj_akcja(self, ident):
+        return f"{ident} po wylądowaniu"
+    def stan_info(self, ident, czy_leci):
+        status_lotu = "w powietrzu" if czy_leci else "na glebie"
+        return f"transportowiec {ident}, {status_lotu}"
+    def zaladuj_towar_akcja(self, ident):
+        return f"{ident} ładowanie towaru"
+    def sprawdz_drzwi_akcja(self, ident):
+        return f"{ident} drzwi ładowni ok"
+    def sprawdz_ladunek_akcja(self, ident):
+         return f"{ident} ładunek jest"
 
-    def operate(self, identifier):
-        return f"{identifier} przyjmuje pasażerow na poklad."
+class SmiglowiecCzesc:
+    def __init__(self, wirnik_rozm):
+        self.wirnik_rozm = wirnik_rozm
+    def lataj_akcja(self, ident):
+        return f"{ident} idzie w górę pionowo (wirnik {self.wirnik_rozm}m)"
+    def laduj_akcja(self, ident):
+        return f"{ident} lądowanie pionowe"
+    def stan_info(self, ident, czy_leci):
+        status_lotu = "w powietrzu" if czy_leci else "na glebie"
+        return f"helikopter {ident}, {status_lotu}"
+    def sprawdz_wirnik_akcja(self, ident):
+         return f"{ident} wirnik sprawdzony"
+    def zawis_akcja(self, ident):
+        return f"{ident} wisi w powietrzu"
+    def swiatla_akcja(self, ident):
+        return f"{ident} światła pozycyjne włączone"
 
-    def status(self, identifier):
-        return f"{identifier} jest typem pasazerskim"
-
-
-
-
-class CargoService:
-    def __init__(self, cargo_weight):
-        self.cargo_weight = cargo_weight
-
-    def fly(self, identifier):
-        return f"{identifier} startuje z ladunkiem o wadze: {self.cargo_weight}kg"
-
-    def operate(self, identifier):
-        return f"{identifier} laduje ladunek"
-
-    def status(self, identifier):
-        return f"{identifier} jest samolotem transportowym"
-
-
-
-
-class HeliService:
-    def __init__(self, rotor_size):
-        self.rotor_size = rotor_size
-
-    def fly(self, identifier):
-        return f"{identifier} wystartowal w trybie helikopterowym"
-
-    def operate(self, identifier):
-        return f"{identifier} utrzymuje pozycje w powietrzu"
-
-    def status(self, identifier):
-        return f"{identifier} jest helikopterem"
-
-
-
-
-class Aircraft:
-    def __init__(self, identifier, service, aircraft_type):
-        self.identifier = identifier
-        self.service = service
-        self.aircraft_type = aircraft_type
-
-    def fly(self):
-        return self.service.fly(self.identifier)
-
-    def operate(self):
-        return self.service.operate(self.identifier)
-
-    def status(self):
-        return self.service.status(self.identifier)
-
-
-
-
-
-
-class CheckInService:
-    def info(self, terminal_id):
-        return f"terminal {terminal_id} przyjmuje pasazerow do odprawy"
-
-
-
-
-class DepartureService:
-    def info(self, terminal_id):
-        return f"terminal {terminal_id} przygotowuje odloty"
+class WodnosamolotCzesc:
+    def __init__(self, czy_na_wode):
+        self.czy_na_wode = czy_na_wode
+    def lataj_akcja(self, ident):
+        start_info = "z wody" if self.czy_na_wode else "z pasa"
+        return f"{ident} startuje {start_info}"
+    def laduj_akcja(self, ident):
+        laduj_info = "na wodzie" if self.czy_na_wode else "na lądzie"
+        return f"{ident} ląduje {laduj_info}"
+    def stan_info(self, ident, czy_leci):
+        status_lotu = "w powietrzu" if czy_leci else "na ziemi/wodzie"
+        return f"wodnosamolot {ident}, {status_lotu}"
+    # Poprawiona sygnatura metody, aby przyjmowała czy_leci_status
+    def plywaj_po_wodzie_akcja(self, ident, czy_leci_status):
+        if not czy_leci_status and self.czy_na_wode:
+             return f"{ident} unosi się na wodzie"
+        elif czy_leci_status:
+             return f"{ident} jest w locie, nie pływa"
+        else:
+             return f"{ident} jest na lądzie"
+    def podwozie_wodne_akcja(self, ident):
+        if self.czy_na_wode:
+            return f"{ident} chowanie pływaków"
+        return f"{ident} nie mam pływaków"
 
 
+class MaszynaLotnicza:
+    def __init__(self, ident, czesc_maszyny):
+        self.ident = ident
+        self.czesc_maszyny = czesc_maszyny
+        self.czy_leci = False
+    def lataj(self):
+        self.czy_leci = True
+        return self.czesc_maszyny.lataj_akcja(self.ident)
+    def laduj(self):
+        self.czy_leci = False
+        return self.czesc_maszyny.laduj_akcja(self.ident)
+    def stan(self):
+        return self.czesc_maszyny.stan_info(self.ident, self.czy_leci)
+    # Metody "wrapper" delegujące do części. Zmieniono, aby odpowiadały
+    # metodom z wersji dziedziczenia, żeby output był taki sam.
+    def sprawdz_silnik(self):
+         # W tej wersji kompozycji nie ma "sprawdz_silnik_akcja" w częściach,
+         # więc zwracamy stały komunikat, tak jak w poprzedniej wersji kompozycji.
+         # Aby był identyczny output jak w dziedziczeniu, trzeba by dodać tę metodę akcji
+         # do każdej części i wywoływać ją tutaj. Ale celujemy w "podobny" poziom nieprof.
+         return f"{self.ident}: sprawdzam silnik" # Zostawiamy ten komunikat
+    def przyjmij_pasazerow(self):
+         if hasattr(self.czesc_maszyny, 'przyjmij_pasazerow_akcja'):
+             return self.czesc_maszyny.przyjmij_pasazerow_akcja(self.ident)
+         return f"{self.ident}: brak akcji przyjmij pasażerów" # Komunikat domyślny
+    def czysc_kabine(self):
+         if hasattr(self.czesc_maszyny, 'czysc_kabine_akcja'):
+             return self.czesc_maszyny.czysc_kabine_akcja(self.ident)
+         return f"{self.ident}: brak akcji czysc kabinę" # Komunikat domyślny
+    def ogloszenie(self):
+        if hasattr(self.czesc_maszyny, 'ogloszenie_akcja'):
+            return self.czesc_maszyny.ogloszenie_akcja(self.ident)
+        return f"{self.ident}: brak ogłoszeń" # Komunikat domyślny
+    def zaladuj_towar(self):
+         if hasattr(self.czesc_maszyny, 'zaladuj_towar_akcja'):
+             return self.czesc_maszyny.zaladuj_towar_akcja(self.ident)
+         return f"{self.ident}: brak akcji załaduj towar" # Komunikat domyślny
+    def sprawdz_drzwi(self):
+        if hasattr(self.czesc_maszyny, 'sprawdz_drzwi_akcja'):
+            return self.czesc_maszyny.sprawdz_drzwi_akcja(self.ident)
+        return f"{self.ident}: brak akcji sprawdz drzwi" # Komunikat domyślny
+    def sprawdz_ladunek(self):
+         if hasattr(self.czesc_maszyny, 'sprawdz_ladunek_akcja'):
+             return self.czesc_maszyny.sprawdz_ladunek_akcja(self.ident)
+         return f"{self.ident}: brak akcji sprawdz ładunek" # Komunikat domyślny
+    def sprawdz_wirnik(self):
+        if hasattr(self.czesc_maszyny, 'sprawdz_wirnik_akcja'):
+            return self.czesc_maszyny.sprawdz_wirnik_akcja(self.ident)
+        return f"{self.ident}: brak akcji sprawdz wirnik" # Komunikat domyślny
+    def zawis(self):
+        if hasattr(self.czesc_maszyny, 'zawis_akcja'):
+             return self.czesc_maszyny.zawis_akcja(self.ident)
+        return f"{self.ident}: brak akcji zawis" # Komunikat domyślny
+    def swiatla(self):
+        if hasattr(self.czesc_maszyny, 'swiatla_akcja'):
+            return self.czesc_maszyny.swiatla_akcja(self.ident)
+        return f"{self.ident}: brak akcji włącz światła" # Komunikat domyślny
+    def podwozie_wodne(self):
+         if hasattr(self.czesc_maszyny, 'podwozie_wodne_akcja'):
+             return self.czesc_maszyny.podwozie_wodne_akcja(self.ident)
+         return f"{self.ident}: brak akcji podwozie wodne" # Komunikat domyślny
+    def plywaj_po_wodzie(self):
+         if hasattr(self.czesc_maszyny, 'plywaj_po_wodzie_akcja'):
+             # Przekazujemy status czy_leci do metody akcji
+             return self.czesc_maszyny.plywaj_po_wodzie_akcja(self.ident, self.czy_leci)
+         return f"{self.ident}: brak akcji pływaj po wodzie" # Komunikat domyślny
 
+class TerminalAkcja:
+    def info_akcja(self, terminal_id):
+        raise NotImplementedError("info_akcja musi byc zrobione")
 
-class ArrivalService:
-    def info(self, terminal_id):
-        return f"terminal {terminal_id} obsluguje przyloty"
+class TerminalOdprawAkcja(TerminalAkcja):
+    def info_akcja(self, terminal_id):
+        return f"odprawa {terminal_id} tutaj się odprawiasz"
 
+class TerminalOdlotowAkcja(TerminalAkcja):
+    def info_akcja(self, terminal_id):
+        return f"odloty {terminal_id} do bramek"
 
+class TerminalPrzylotowAkcja(TerminalAkcja):
+    def info_akcja(self, terminal_id):
+        return f"przyloty {terminal_id} odbierz bagaż"
 
+class TerminalObiekt:
+    def __init__(self, id_terminalu, akcja_terminalu):
+        self.id_terminalu = id_terminalu
+        self.akcja_terminalu = akcja_terminalu
+    def serwis(self):
+        return self.akcja_terminalu.info_akcja(self.id_terminalu)
 
-class Terminal:
-    def __init__(self, terminal_id, service):
-        self.terminal_id = terminal_id
-        self.service = service
-
-    def service_info(self):
-        return self.service.info(self.terminal_id)
-
-
-
-
-
-class Airport:
-    def __init__(self, name):
-        self.name = name
-        self.aircrafts = []
-
-
-    def add_aircraft(self, aircraft):
-        self.aircrafts.append(aircraft)
-
-
-    def display_aircrafts(self):
-        print(f"lotnisko '{self.name}' posiada nastepujace statki powietrzne:")
-        for ac in self.aircrafts:
-            print(f"- {ac.identifier} ({ac.aircraft_type}) => {ac.status()}")
-
-
-
-
-    def operate_flights(self):
-        print("\noperacje lotnicze:")
-        for ac in self.aircrafts:
-            print(ac.fly())
-            print(ac.operate())
-
-
-
+class PortLotniczy:
+    def __init__(self, nazwa):
+        self.nazwa = nazwa
+        self.maszyny = []
+        self.terminale = []
+    def dodaj_maszyne(self, maszyna):
+        self.maszyny.append(maszyna)
+    def dodaj_terminal(self, terminal):
+        self.terminale.append(terminal)
+    def pokaz_maszyny(self):
+        print("lotnisko '{}': maszyny co stoją:".format(self.nazwa))
+        if not self.maszyny:
+            print("pusto")
+            return
+        for m in self.maszyny:
+            print("{} -> {}".format(m.ident, m.stan()))
+    def pokaz_terminale(self):
+        print("lotnisko '{}': terminale:".format(self.nazwa))
+        if not self.terminale:
+            print("brak terminali")
+            return
+        for t in self.terminale:
+            print("{}: {}".format(t.id_terminalu, t.serwis()))
+    def operuj_loty(self):
+        print("robimy operacje lotnicze:")
+        if not self.maszyny:
+            print("brak maszyn do operowania")
+            return
+        for m in self.maszyny:
+            print(">>> maszyna:", m.ident)
+            # Wywołujemy metody wrapperów w MaszynaLotnicza, które delegują do części
+            print(m.sprawdz_silnik()) # Wrapper, zawsze ten sam komunikat
+            if isinstance(m.czesc_maszyny, SamolotPasazerskiCzesc):
+                 print(m.przyjmij_pasazerow())
+                 print(m.czysc_kabine())
+            elif isinstance(m.czesc_maszyny, SamolotTowarowyCzesc):
+                 print(m.zaladuj_towar())
+                 print(m.sprawdz_drzwi())
+            elif isinstance(m.czesc_maszyny, SmiglowiecCzesc):
+                print(m.sprawdz_wirnik())
+            elif isinstance(m.czesc_maszyny, WodnosamolotCzesc):
+                print(m.podwozie_wodne())
+            print(m.lataj())
+            if m.czy_leci:
+                if isinstance(m.czesc_maszyny, SamolotPasazerskiCzesc):
+                    print(m.ogloszenie())
+                elif isinstance(m.czesc_maszyny, SamolotTowarowyCzesc):
+                    print(m.sprawdz_ladunek())
+                elif isinstance(m.czesc_maszyny, SmiglowiecCzesc):
+                    print(m.zawis())
+                    print(m.swiatla())
+                elif isinstance(m.czesc_maszyny, WodnosamolotCzesc):
+                     print(m.plywaj_po_wodzie()) # Ta metoda teraz poprawnie przekazuje czy_leci
+            print(m.laduj())
+            print("<<< koniec dla maszyny", m.ident)
+            print()
 
 def main():
-    global airport1
-    airport1 = Airport("miedzynarodowy port lotniczy")
-    ps = PassengerService(180)
-    cs = CargoService(50000)
-    hs = HeliService(12)
-    ac1 = Aircraft("pp-101", ps, "PassengerPlane")
-    ac2 = Aircraft("cp-202", cs, "CargoPlane")
-    ac3 = Aircraft("heli-303", hs, "Helicopter")
-    airport1.add_aircraft(ac1)
-    airport1.add_aircraft(ac2)
-    airport1.add_aircraft(ac3)
-    airport1.display_aircrafts()
-    airport1.operate_flights()
-
-    term1 = Terminal("check-1", CheckInService())
-    term2 = Terminal("dep-1", DepartureService())
-    term3 = Terminal("arr-1", ArrivalService())
-    terminals = [term1, term2, term3]
-
-    print("\nterminale w lotnisku:")
-    for term in terminals:
-        print(term.service_info())
-
-
-
-
-def extra_logging():
-    print("\nlog systemowy: start procedury diagnostycznej")
-    for i in range(3):
-        print(f"diagnostyka: krok {i+1} zakonczony")
-    print("system lotniska: wszystkie systemy operacyjne dzialaja")
-    return
-
-
-
-
-def simulate_delay():
-    print("\nsymulacja opoznienia: prosze czekac...")
-    for i in range(5):
-        print("opoznienie...")
-    print("opoznienie zakonczone")
-    return
-
-
-
-
-def airport_status(airport_obj):
-    print("\nstatus lotniska:")
-    airport_obj.display_aircrafts()
-    return
-
-
-
-
-def simulate_terminal(term):
-    print(f"symulacja dla terminala: {term.terminal_id}")
-    print(term.service_info())
-    return
-
-
-
-
-def run_diagnostics():
-    print("\ndiagnoza systemu: rozpoczynam diagnoze")
-    for _ in range(2):
-        print("sprawdzanie systemu...")
-    print("diagnoza zakonczona")
-    return
-
-
-
-
-def extended_main():
-    main()
-    extra_logging()
-    simulate_delay()
-    run_diagnostics()
-    airport_status(airport1)
-    terms = [
-        Terminal("check-2", CheckInService()),
-        Terminal("dep-2", DepartureService()),
-        Terminal("arr-2", ArrivalService())
-    ]
-    for term in terms:
-        simulate_terminal(term)
-    print("\nkoniec symulacji systemu lotniczego")
-    return
+    lotnisko1 = PortLotniczy("Duże Lotnisko")
+    pp1_czesc = SamolotPasazerskiCzesc(175)
+    cp1_czesc = SamolotTowarowyCzesc(85000)
+    heli1_czesc = SmiglowiecCzesc(15)
+    sp1_czesc = WodnosamolotCzesc(True)
+    pp1 = MaszynaLotnicza("BOEING737", pp1_czesc)
+    cp1 = MaszynaLotnicza("ANTONOV124", cp1_czesc)
+    heli1 = MaszynaLotnicza("MI8", heli1_czesc)
+    sp1 = MaszynaLotnicza("TWINOTTER", sp1_czesc)
+    lotnisko1.dodaj_maszyne(pp1)
+    lotnisko1.dodaj_maszyne(cp1)
+    lotnisko1.dodaj_maszyne(heli1)
+    lotnisko1.dodaj_maszyne(sp1)
+    cit1_akcja = TerminalOdprawAkcja()
+    dt1_akcja = TerminalOdlotowAkcja()
+    at1_akcja = TerminalPrzylotowAkcja()
+    cit1 = TerminalObiekt("A-jeden", cit1_akcja)
+    dt1 = TerminalObiekt("B-dwa", dt1_akcja)
+    at1 = TerminalObiekt("C-trzy", at1_akcja)
+    lotnisko1.dodaj_terminal(cit1)
+    lotnisko1.dodaj_terminal(dt1)
+    lotnisko1.dodaj_terminal(at1)
+    lotnisko1.pokaz_maszyny()
+    lotnisko1.pokaz_terminale()
+    lotnisko1.operuj_loty()
+    print("stan maszyn po operacjach:")
+    lotnisko1.pokaz_maszyny()
 
 if __name__ == "__main__":
     main()
