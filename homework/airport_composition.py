@@ -61,7 +61,6 @@ class WodnosamolotCzesc:
     def stan_info(self, ident, czy_leci):
         status_lotu = "w powietrzu" if czy_leci else "na ziemi/wodzie"
         return f"wodnosamolot {ident}, {status_lotu}"
-    # Poprawiona sygnatura metody, aby przyjmowała czy_leci_status
     def plywaj_po_wodzie_akcja(self, ident, czy_leci_status):
         if not czy_leci_status and self.czy_na_wode:
              return f"{ident} unosi się na wodzie"
@@ -73,7 +72,6 @@ class WodnosamolotCzesc:
         if self.czy_na_wode:
             return f"{ident} chowanie pływaków"
         return f"{ident} nie mam pływaków"
-
 
 class MaszynaLotnicza:
     def __init__(self, ident, czesc_maszyny):
@@ -88,59 +86,52 @@ class MaszynaLotnicza:
         return self.czesc_maszyny.laduj_akcja(self.ident)
     def stan(self):
         return self.czesc_maszyny.stan_info(self.ident, self.czy_leci)
-    # Metody "wrapper" delegujące do części. Zmieniono, aby odpowiadały
-    # metodom z wersji dziedziczenia, żeby output był taki sam.
     def sprawdz_silnik(self):
-         # W tej wersji kompozycji nie ma "sprawdz_silnik_akcja" w częściach,
-         # więc zwracamy stały komunikat, tak jak w poprzedniej wersji kompozycji.
-         # Aby był identyczny output jak w dziedziczeniu, trzeba by dodać tę metodę akcji
-         # do każdej części i wywoływać ją tutaj. Ale celujemy w "podobny" poziom nieprof.
-         return f"{self.ident}: sprawdzam silnik" # Zostawiamy ten komunikat
+         return f"{self.ident}: sprawdzam silnik"
     def przyjmij_pasazerow(self):
          if hasattr(self.czesc_maszyny, 'przyjmij_pasazerow_akcja'):
              return self.czesc_maszyny.przyjmij_pasazerow_akcja(self.ident)
-         return f"{self.ident}: brak akcji przyjmij pasażerów" # Komunikat domyślny
+         return f"{self.ident}: brak akcji przyjmij pasażerów"
     def czysc_kabine(self):
          if hasattr(self.czesc_maszyny, 'czysc_kabine_akcja'):
              return self.czesc_maszyny.czysc_kabine_akcja(self.ident)
-         return f"{self.ident}: brak akcji czysc kabinę" # Komunikat domyślny
+         return f"{self.ident}: brak akcji czysc kabinę"
     def ogloszenie(self):
         if hasattr(self.czesc_maszyny, 'ogloszenie_akcja'):
             return self.czesc_maszyny.ogloszenie_akcja(self.ident)
-        return f"{self.ident}: brak ogłoszeń" # Komunikat domyślny
+        return f"{self.ident}: brak ogłoszeń"
     def zaladuj_towar(self):
          if hasattr(self.czesc_maszyny, 'zaladuj_towar_akcja'):
              return self.czesc_maszyny.zaladuj_towar_akcja(self.ident)
-         return f"{self.ident}: brak akcji załaduj towar" # Komunikat domyślny
+         return f"{self.ident}: brak akcji załaduj towar"
     def sprawdz_drzwi(self):
         if hasattr(self.czesc_maszyny, 'sprawdz_drzwi_akcja'):
             return self.czesc_maszyny.sprawdz_drzwi_akcja(self.ident)
-        return f"{self.ident}: brak akcji sprawdz drzwi" # Komunikat domyślny
+        return f"{self.ident}: brak akcji sprawdz drzwi"
     def sprawdz_ladunek(self):
          if hasattr(self.czesc_maszyny, 'sprawdz_ladunek_akcja'):
              return self.czesc_maszyny.sprawdz_ladunek_akcja(self.ident)
-         return f"{self.ident}: brak akcji sprawdz ładunek" # Komunikat domyślny
+         return f"{self.ident}: brak akcji sprawdz ładunek"
     def sprawdz_wirnik(self):
         if hasattr(self.czesc_maszyny, 'sprawdz_wirnik_akcja'):
             return self.czesc_maszyny.sprawdz_wirnik_akcja(self.ident)
-        return f"{self.ident}: brak akcji sprawdz wirnik" # Komunikat domyślny
+        return f"{self.ident}: brak akcji sprawdz wirnik"
     def zawis(self):
         if hasattr(self.czesc_maszyny, 'zawis_akcja'):
              return self.czesc_maszyny.zawis_akcja(self.ident)
-        return f"{self.ident}: brak akcji zawis" # Komunikat domyślny
+        return f"{self.ident}: brak akcji zawis"
     def swiatla(self):
         if hasattr(self.czesc_maszyny, 'swiatla_akcja'):
             return self.czesc_maszyny.swiatla_akcja(self.ident)
-        return f"{self.ident}: brak akcji włącz światła" # Komunikat domyślny
+        return f"{self.ident}: brak akcji włącz światła"
     def podwozie_wodne(self):
          if hasattr(self.czesc_maszyny, 'podwozie_wodne_akcja'):
              return self.czesc_maszyny.podwozie_wodne_akcja(self.ident)
-         return f"{self.ident}: brak akcji podwozie wodne" # Komunikat domyślny
+         return f"{self.ident}: brak akcji podwozie wodne"
     def plywaj_po_wodzie(self):
          if hasattr(self.czesc_maszyny, 'plywaj_po_wodzie_akcja'):
-             # Przekazujemy status czy_leci do metody akcji
              return self.czesc_maszyny.plywaj_po_wodzie_akcja(self.ident, self.czy_leci)
-         return f"{self.ident}: brak akcji pływaj po wodzie" # Komunikat domyślny
+         return f"{self.ident}: brak akcji pływaj po wodzie"
 
 class TerminalAkcja:
     def info_akcja(self, terminal_id):
@@ -195,8 +186,7 @@ class PortLotniczy:
             return
         for m in self.maszyny:
             print(">>> maszyna:", m.ident)
-            # Wywołujemy metody wrapperów w MaszynaLotnicza, które delegują do części
-            print(m.sprawdz_silnik()) # Wrapper, zawsze ten sam komunikat
+            print(m.sprawdz_silnik())
             if isinstance(m.czesc_maszyny, SamolotPasazerskiCzesc):
                  print(m.przyjmij_pasazerow())
                  print(m.czysc_kabine())
@@ -217,7 +207,7 @@ class PortLotniczy:
                     print(m.zawis())
                     print(m.swiatla())
                 elif isinstance(m.czesc_maszyny, WodnosamolotCzesc):
-                     print(m.plywaj_po_wodzie()) # Ta metoda teraz poprawnie przekazuje czy_leci
+                     print(m.plywaj_po_wodzie())
             print(m.laduj())
             print("<<< koniec dla maszyny", m.ident)
             print()
