@@ -98,6 +98,23 @@ class Wodnosamolot(MaszynaLotnicza):
         else:
             return f"{self.ident} jest na lądzie"
 
+class TerminalObiekt:
+    def __init__(self, id_terminalu):
+        self.id_terminalu = id_terminalu
+    def serwis(self):
+        raise NotImplementedError("serwis musi byc zrobione")
+
+class TerminalOdpraw(TerminalObiekt):
+    def serwis(self):
+        return f"odprawa {self.id_terminalu} tutaj się odprawiasz"
+
+class TerminalOdlotow(TerminalObiekt):
+    def serwis(self):
+        return f"odloty {self.id_terminalu} do bramek"
+
+class TerminalPrzylotow(TerminalObiekt):
+    def serwis(self):
+        return f"przyloty {self.id_terminalu} odbierz bagaż"
 
 class PortLotniczy:
     def __init__(self, nazwa):
@@ -109,26 +126,26 @@ class PortLotniczy:
     def dodaj_terminal(self, terminal):
         self.terminale.append(terminal)
     def pokaz_maszyny(self):
-        print("lotnisko '{}': maszyny co stoją:".format(self.nazwa))
+        print(f"lotnisko '{self.nazwa}': maszyny co stoją:")
         if not self.maszyny:
             print("pusto")
             return
         for m in self.maszyny:
-            print("{} ({}) -> {}".format(m.ident, m.__class__.__name__, m.stan()))
+            print(f"{m.ident} -> {m.stan()}")
     def pokaz_terminale(self):
-        print("lotnisko '{}': terminale:".format(self.nazwa))
+        print(f"lotnisko '{self.nazwa}': terminale:")
         if not self.terminale:
             print("brak terminali")
             return
         for t in self.terminale:
-            print("{}: {}".format(t.id_terminalu, t.serwis()))
+            print(f"{t.id_terminalu}: {t.serwis()}")
     def operuj_loty(self):
         print("robimy operacje lotnicze:")
         if not self.maszyny:
             print("brak maszyn do operowania")
             return
         for m in self.maszyny:
-            print(">>> maszyna:", m.ident)
+            print(f">>> maszyna: {m.ident}")
             print(m.sprawdz_silnik())
             if isinstance(m, SamolotPasazerski):
                  print(m.przyjmij_pasazerow())
@@ -152,48 +169,29 @@ class PortLotniczy:
                 elif isinstance(m, Wodnosamolot):
                      print(m.plywaj_po_wodzie())
             print(m.laduj())
-            print("<<< koniec dla maszyny", m.ident)
+            print(f"<<< koniec dla maszyny {m.ident}")
             print()
 
-class TerminalObiekt:
-    def __init__(self, id_terminalu):
-        self.id_terminalu = id_terminalu
-    def serwis(self):
-        raise NotImplementedError("serwis musi byc zrobione")
-
-class TerminalOdpraw(TerminalObiekt):
-    def serwis(self):
-        return f"odprawa {self.id_terminalu} tutaj się odprawiasz"
-
-class TerminalOdlotow(TerminalObiekt):
-    def serwis(self):
-        return f"odloty {self.id_terminalu} do bramek"
-
-class TerminalPrzylotow(TerminalObiekt):
-    def serwis(self):
-        return f"przyloty {self.id_terminalu} odbierz bagaż"
-
-def main():
-    lotnisko1 = PortLotniczy("Duże Lotnisko")
-    pp1 = SamolotPasazerski("BOEING737", 175)
-    cp1 = SamolotTowarowy("ANTONOV124", 85000)
-    heli1 = Smiglowiec("MI8", 15)
-    sp1 = Wodnosamolot("TWINOTTER", True)
-    lotnisko1.dodaj_maszyne(pp1)
-    lotnisko1.dodaj_maszyne(cp1)
-    lotnisko1.dodaj_maszyne(heli1)
-    lotnisko1.dodaj_maszyne(sp1)
-    cit1 = TerminalOdpraw("A-jeden")
-    dt1 = TerminalOdlotow("B-dwa")
-    at1 = TerminalPrzylotow("C-trzy")
-    lotnisko1.dodaj_terminal(cit1)
-    lotnisko1.dodaj_terminal(dt1)
-    lotnisko1.dodaj_terminal(at1)
-    lotnisko1.pokaz_maszyny()
-    lotnisko1.pokaz_terminale()
-    lotnisko1.operuj_loty()
-    print("stan maszyn po operacjach:")
-    lotnisko1.pokaz_maszyny()
-
 if __name__ == "__main__":
+    def main():
+        lotnisko1 = PortLotniczy("Duże Lotnisko")
+        pp1 = SamolotPasazerski("BOEING737", 175)
+        cp1 = SamolotTowarowy("ANTONOV124", 85000)
+        heli1 = Smiglowiec("MI8", 15)
+        sp1 = Wodnosamolot("TWINOTTER", True)
+        lotnisko1.dodaj_maszyne(pp1)
+        lotnisko1.dodaj_maszyne(cp1)
+        lotnisko1.dodaj_maszyne(heli1)
+        lotnisko1.dodaj_maszyne(sp1)
+        cit1 = TerminalOdpraw("A-jeden")
+        dt1 = TerminalOdlotow("B-dwa")
+        at1 = TerminalPrzylotow("C-trzy")
+        lotnisko1.dodaj_terminal(cit1)
+        lotnisko1.dodaj_terminal(dt1)
+        lotnisko1.dodaj_terminal(at1)
+        lotnisko1.pokaz_maszyny()
+        lotnisko1.pokaz_terminale()
+        lotnisko1.operuj_loty()
+        print("stan maszyn po operacjach:")
+        lotnisko1.pokaz_maszyny()
     main()
