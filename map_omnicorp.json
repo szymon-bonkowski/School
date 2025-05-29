@@ -1,0 +1,107 @@
+[
+    {
+        "node_id": "entry_01",
+        "name": "Brama Wejściowa Głównego Serwera",
+        "description": "Stoisz przed wirtualną bramą głównego serwera OmniCorp. Powietrze jest gęste od cyfrowej energii. Słychać cichy szum przetwarzanych danych i odległe echo systemów zabezpieczeń.",
+        "connected_nodes": {"dalej": "lobby_01", "wyloguj": "EXIT"},
+        "items_definitions": [
+            {"type": "DataFragment", "name": "Ulotka Rekrutacyjna OmniCorp", "description": "'Dołącz do liderów przyszłości! OmniCorp - Kształtujemy Jutro.' Wygląda na starą.", "value": 1}
+        ]
+    },
+    {
+        "node_id": "lobby_01",
+        "name": "Lobby Danych",
+        "description": "Obszerne, jasno oświetlone lobby. W centralnym punkcie unosi się dynamiczny, trójwymiarowy hologram logo OmniCorp. Liczne korytarze danych rozchodzą się we wszystkich kierunkach. Widać ślady niedawnej aktywności systemów patrolowych.",
+        "enemies_definitions": [
+            {"type": "Antivirus", "name": "Patrolujący Antywirus чаŁرö (Alpha)", "integrity": 45, "attack": 10, "defense": 3, "xp": 30, "loot_definitions": [{"type": "DataFragment", "name": "Fragment Logu Patrolowego", "value": 5}]}
+        ],
+        "connected_nodes": {"wstecz": "entry_01", "lewo": "archiwum_A", "prawo": "sektor_R_D", "wentylacja": "serwis_shaft_01"},
+        "items_definitions": [
+            {"type": "DataFragment", "name": "Notatka Technika", "description": "'Pamiętaj zmienić hasło dostępowe do archiwum... znowu. Stare to nadal <<qwerty123>>.' Wygląda na porzuconą w pośpiechu.", "value": 0, "is_quest_item": true}
+        ]
+    },
+    {
+        "node_id": "archiwum_A",
+        "name": "Archiwum Danych Alpha",
+        "description": "Chłodne, ciche pomieszczenie wypełnione rzędami wysokich, wirtualnych szaf z danymi. Delikatne niebieskie światło pulsuje na ich powierzchniach. Dostęp do głównego repozytorium wydaje się chroniony zaawansowanym szyfrowaniem.",
+        "puzzle": {
+            "puzzle_id": "archiwum_A_access_puzzle",
+            "type": "password_unlock",
+            "prompt_examine": "Widzisz terminal dostępu do głównego repozytorium Archiwum Alpha. Ekran wyświetla pole do wprowadzenia hasła.",
+            "prompt_interact": "Terminal Archiwum Alpha: Wprowadź hasło autoryzacyjne: ",
+            "solution": "qwerty123",
+            "success_message": "Sekwencja poprawna. Szyfrowanie zdjęte. Dostęp do repozytorium Archiwum Alpha przyznany.",
+            "failure_message": "Błędna sekwencja. Systemy bezpieczeństwa odnotowały próbę nieautoryzowanego dostępu. Słychać ciche kliknięcie...",
+            "item_reward_on_solve": {"type": "DataFragment", "name": "Kluczowy Fragment Danych 'Chimera'", "description": "Zaszyfrowany fragment danych oznaczony jako 'Projekt Chimera - Faza 1'. Wygląda na ważny.", "value": 150, "is_quest_item": true},
+            "unlocks_node_id": "archiwum_A_repo"
+        },
+        "connected_nodes": {"wstecz": "lobby_01", "repozytorium": "locked"} 
+    },
+    {
+        "node_id": "archiwum_A_repo",
+        "name": "Repozytorium Główne Archiwum Alpha",
+        "description": "Wnętrze głównego repozytorium. Niezliczone strumienie danych przepływają przez krystaliczne struktury. Znajdujesz tu wiele potencjalnie cennych informacji i narzędzi.",
+        "items_definitions": [
+            {"type": "Software", "name": "Program Naprawczy Systemu v1.2", "description": "Podstawowy program przywracający niewielką ilość integralności systemu.", "integrity_restore": 30, "bandwidth_cost": 10, "effect_description": "Inicjowanie sekwencji naprawczej..."},
+            {"type": "DataFragment", "name": "Szczegółowe Schematy Serwera Głównego", "description": "Kompletne plany infrastruktury serwera, na którym się znajdujesz. Mogą być bardzo cenne.", "value": 75},
+            {"type": "Item", "name": "Moduł Wirusa 'Robak'", "description": "Komponent potrzebny do skompilowania prostego programu wirusowego."}
+        ],
+        "connected_nodes": {"wyjscie": "archiwum_A"}
+    },
+    {
+        "node_id": "sektor_R_D",
+        "name": "Sektor Badań i Rozwoju (R&D)",
+        "description": "Tutaj OmniCorp pracuje nad swoimi najnowszymi, często eksperymentalnymi technologiami. Powietrze wibruje od mocy obliczeniowej, a na ścianach migoczą skomplikowane diagramy.",
+        "enemies_definitions": [
+            {"type": "FirewallDaemon", "name": "Zapora Ogniowa R&D 'Cerber'", "integrity": 90, "attack": 18, "defense": 8, "xp": 70, "loot_definitions": [{"type": "DataFragment", "name": "Rdzeń Kodujący Zapory", "value": 30}]},
+            {"type": "Antivirus", "name": "Zaawansowany Skaner Antywirusowy 'Argus'", "integrity": 60, "attack": 14, "defense": 5, "xp": 45}
+        ],
+        "connected_nodes": {"wstecz": "lobby_01", "laboratorium": "lab_01_main"},
+        "items_definitions": [
+             {"type": "HardwareUpgrade", "name": "Moduł Przetwarzania Równoległego X-1", "description": "Znacząco zwiększa moc obliczeniową dla programów ofensywnych.", "stat_boost": {"attack_power": 7.0}}
+        ]
+    },
+    {
+        "node_id": "lab_01_main",
+        "name": "Główne Laboratorium Eksperymentalne",
+        "description": "W tym sterylnym laboratorium testowane są nowe rodzaje cyfrowych zabezpieczeń i broni. W centralnej części unosi się prototypowy rdzeń systemu IDS. Wygląda niezwykle groźnie.",
+         "enemies_definitions": [
+            {"type": "IDSGuardian", "name": "Prototypowy Strażnik IDS 'Goliath'", "integrity": 150, "attack": 22, "defense": 12, "xp": 120, "loot_definitions": [{"type": "HardwareUpgrade", "name": "Wzmocniony Interfejs Sieciowy", "description":"Zwiększa maksymalne pasmo operacyjne.", "stat_boost":{"max_bandwidth": 25.0}}, {"type": "DataFragment", "name":"Logi Testowe Prototypu IDS", "value": 50}]}
+        ],
+        "connected_nodes": {"wstecz": "sektor_R_D", "magazyn_prototypow": "prototype_storage_01"}
+    },
+    {
+        "node_id": "serwis_shaft_01",
+        "name": "Szyb Serwisowy Delta-7",
+        "description": "Wąski, słabo oświetlony szyb serwisowy. Kable i rury danych biegną wzdłuż ścian. Wygląda na rzadko używany, ale może prowadzić w ciekawe miejsca.",
+        "items_definitions": [
+            {"type": "DataFragment", "name": "Zapomniana Dyskietka", "description": "Stara dyskietka z etykietą 'Kody Awaryjne - Tylko Do Użytku Wewnętrznego'.", "value": 10},
+            {"type": "Item", "name": "Rdzeń Naprawczy", "description": "Kluczowy komponent do stworzenia programu naprawczego."}
+        ],
+        "connected_nodes": {"w_gore": "lobby_01", "w_dol": "maintenance_hub"}
+    },
+    {
+        "node_id": "maintenance_hub",
+        "name": "Węzeł Konserwacyjny Zeta",
+        "description": "Centralny punkt systemów konserwacyjnych. Pełno tu narzędzi diagnostycznych i terminali kontrolnych. Jakiś stary program antywirusowy nadal patroluje ten obszar.",
+        "enemies_definitions": [
+            {"type": "Antivirus", "name": "Przestarzały Antywirus Konserwacyjny", "integrity": 35, "attack": 7, "defense": 2, "xp": 20}
+        ],
+        "items_definitions": [
+            {"type": "Software", "name": "Narzędzie Diagnostyczne", "description": "Może ujawnić słabości w niektórych systemach (niezaimplementowane).", "bandwidth_cost": 5}
+        ],
+        "connected_nodes": {"szyb_serwisowy": "serwis_shaft_01"}
+    },
+    {
+        "node_id": "prototype_storage_01",
+        "name": "Magazyn Prototypów R&D",
+        "description": "Chłodne, sterylne pomieszczenie, gdzie przechowywane są nieukończone lub porzucone prototypy technologii OmniCorp. Niektóre z nich wciąż wydają się aktywne.",
+        "enemies_definitions": [
+            {"type": "FirewallDaemon", "name": "Eksperymentalna Zapora 'Widmo'", "integrity": 60, "attack": 20, "defense": 5, "xp": 60, "special_ability_name": "OverloadPulse"} 
+        ],
+        "items_definitions": [
+            {"type": "HardwareUpgrade", "name": "Akcelerator Kwantowy (Uszkodzony)", "description": "Potężny, ale niestabilny moduł. Mógłby znacznie zwiększyć moc obliczeniową, gdyby udało się go naprawić.", "stat_boost": {"attack_power": 10.0, "max_bandwidth": -10.0}}
+        ],
+        "connected_nodes": {"wyjscie": "lab_01_main"}
+    }
+]

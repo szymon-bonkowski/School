@@ -1,0 +1,58 @@
+[
+    {
+        "quest_id": "EV001",
+        "title": "Pierwszy Kontakt z Echo Vector",
+        "description": "Otrzymałeś zaszyfrowaną wiadomość od grupy 'Echo Vector'. Wygląda na to, że chcą nawiązać kontakt i sprawdzić twoje umiejętności. Musisz dotrzeć do wskazanego węzła danych i odzyskać zaszyfrowany pakiet z ich instrukcjami.",
+        "starts_dialogue_key": "dialogue_ev001_start",
+        "required_level": 1,
+        "objectives": [
+            {"description": "Dotrzyj do węzła 'Lobby Danych'", "type": "reach_node", "target": "lobby_01", "amount": 1},
+            {"description": "Zneutralizuj 'Patrolujący Antywirus чаŁرö (Alpha)' w Lobby Danych", "type": "defeat_enemy", "target": "Patrolujący Antywirus чаŁرö (Alpha)", "amount": 1},
+            {"description": "Zdobądź 'Notatka Technika' z Lobby Danych", "type": "collect_item", "target": "Notatka Technika", "amount": 1}
+        ],
+        "xp_reward": 150,
+        "item_rewards_definitions": [
+            {"type": "Software", "name": "Deszyfrator Alpha v0.8", "description": "Prosty program zdolny do łamania podstawowych szyfrów. Niezbędny do dalszych działań.", "bandwidth_cost": 5, "effect_description": "Uruchamianie algorytmu deszyfrującego..."},
+            {"type": "DataFragment", "name": "Kredyty Danych od Echo Vector", "description": "Niewielka suma na start.", "value": 50}
+        ],
+        "ends_dialogue_key": "dialogue_ev001_end",
+        "unlocks_quest_id": "EV002"
+    },
+    {
+        "quest_id": "EV002",
+        "title": "Sekrety Archiwum Alpha",
+        "description": "'Echo Vector' jest pod wrażeniem twoich postępów. Teraz proszą o zinfiltrowanie silnie strzeżonego Archiwum Alpha i zdobycie kluczowych danych o tajnym projekcie 'Chimera'. Dostęp do repozytorium jest chroniony hasłem, które mogłeś znaleźć w notatce technika.",
+        "starts_dialogue_key": "dialogue_ev002_start",
+        "required_level": 2,
+        "objectives": [
+            {"description": "Dotrzyj do węzła 'Archiwum Danych Alpha'", "type": "reach_node", "target": "archiwum_A", "amount": 1},
+            {"description": "Rozwiąż zagadkę dostępu do repozytorium (użyj hasła z notatki)", "type": "solve_puzzle", "target": "archiwum_A_access_puzzle", "amount": 1}, 
+            {"description": "Zdobądź 'Kluczowy Fragment Danych 'Chimera'' z repozytorium", "type": "collect_item", "target": "Kluczowy Fragment Danych 'Chimera'", "amount": 1}
+        ],
+        "xp_reward": 300,
+        "item_rewards_definitions": [
+            {"type": "HardwareUpgrade", "name": "Koprocesor Szyfrujący Mark I", "description": "Znacząco przyspiesza operacje deszyfracji i zwiększa dostępne pasmo operacyjne.", "stat_boost": {"max_bandwidth": 20.0, "attack_power": 3.0}},
+            {"type": "Item", "name": "Moduł Wirusa 'Robak'", "description": "Komponent potrzebny do skompilowania prostego programu wirusowego."}
+        ],
+        "ends_dialogue_key": "dialogue_ev002_end",
+        "unlocks_quest_id": "EV003" 
+    },
+    {
+        "quest_id": "EV003",
+        "title": "Sabotaż w Sektorze R&D",
+        "description": "Dane o 'Chimera' są niepokojące. 'Echo Vector' chce, abyś zinfiltrował Sektor Badań i Rozwoju i zdobył prototypowy moduł, który może pomóc w walce z AI OmniCorp. Sektor jest silnie strzeżony.",
+        "starts_dialogue_key": "dialogue_ev003_start",
+        "required_level": 3,
+        "objectives": [
+            {"description": "Dotrzyj do węzła 'Sektor Badań i Rozwoju (R&D)'", "type": "reach_node", "target": "sektor_R_D"},
+            {"description": "Zneutralizuj 'Zaporę Ogniową R&D 'Cerber''", "type": "defeat_enemy", "target": "Zapora Ogniowa R&D 'Cerber'"},
+            {"description": "Zneutralizuj 'Zaawansowany Skaner Antywirusowy 'Argus''", "type": "defeat_enemy", "target": "Zaawansowany Skaner Antywirusowy 'Argus'"},
+            {"description": "Zdobądź 'Moduł Przetwarzania Równoległego X-1' z Sektora R&D", "type": "collect_item", "target": "Moduł Przetwarzania Równoległego X-1"}
+        ],
+        "xp_reward": 450,
+        "item_rewards_definitions": [
+            {"type": "Software", "name": "Impuls Zakłócający v1", "description": "Chwilowo obniża obronę celu.", "bandwidth_cost": 15, "effect_description": "Generowanie fali zakłócającej... (efekt do implementacji)"}
+        ],
+        "ends_dialogue_key": "dialogue_ev003_end"
+    }
+]
