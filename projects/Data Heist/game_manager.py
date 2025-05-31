@@ -22,11 +22,13 @@ except ImportError:
     print("Ostrzeżenie: Biblioteka 'colorama' nie jest zainstalowana. Tekst nie będzie kolorowy.")
     print("Aby zainstalować, użyj: pip install colorama")
 
+import os
 SAVE_FILE_USER_PREFIX = "save_data_heist_"
-MAP_FILE = "map_omnicorp.json"
-USER_DATA_FILE = "users_data.json"
-QUEST_FILE = "quests_data.json"
-DIALOGUE_FILE = "dialogues.json"
+DATA_FOLDER = os.path.join(os.path.dirname(__file__), "data")
+MAP_FILE = os.path.join(DATA_FOLDER, "map_omnicorp.json")
+USER_DATA_FILE = os.path.join(DATA_FOLDER, "users_data.json")
+QUEST_FILE = os.path.join(DATA_FOLDER, "quests_data.json")
+DIALOGUE_FILE = os.path.join(DATA_FOLDER, "dialogues.json")
 
 def slow_print(text: str, delay: float = 0.03, color: str = Fore.WHITE, end: str = "\n", style: str = ""):
     full_text = style + color + text + Style.RESET_ALL

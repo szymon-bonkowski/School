@@ -6,6 +6,10 @@ import time
 from colorama import Fore, Style
 
 def ensure_data_files_exist():
+    import os
+    data_folder = os.path.join(os.path.dirname(__file__), "data")
+    if not os.path.exists(data_folder):
+        os.makedirs(data_folder)
     files_to_check = {
         USER_DATA_FILE: {"admin": {"password": "nimda", "type": "admin"}},
         MAP_FILE: [],
